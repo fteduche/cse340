@@ -1,6 +1,196 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+  background-color: #fff;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.account {
+  align-self: flex-end;
+  font-size: 0.9rem;
+  margin-top: -1.5rem;
+  color: #555;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  background-color: #243447;
+  margin-top: 1rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+nav ul li {
+  flex: 1;
+}
+
+nav ul li a {
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 0.75rem;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: #1a2734;
+}
+
+/* Welcome Section */
+.welcome {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.delorean-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delorean-info {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.delorean-title {
+  color: #007BBD;
+}
+
+.delorean-info ul {
+  list-style: none;
+  margin: 0.5rem 0;
+}
+
+.btn-own {
+  background-color: #00AEEF;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delorean-img {
+  max-width: 350px;
+  height: auto;
+}
+
+/* Content Section */
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.upgrades,
+.reviews {
+  margin-top: 1rem;
+}
+
+.upgrades-grid {
+  display: grid;
+  /* --- MODIFIED: Forces exactly 2 columns, equally sized --- */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.upgrade-item {
+  background-color: #00B8E6;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.upgrade-item img {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: 0 auto;
+}
+
+.upgrade-item a {
+  color: #0000EE;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.reviews ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 1rem 0;
+}
+
+/* Responsive Layout for Desktop (Web View) */
+@media (min-width: 768px) {
+
+  /* --- ADDED THIS RULE --- */
+  body {
+    /* Applies 0 margin top/bottom and 20% left/right */
+    margin: 0 20%;
+  }
+
+  /* ----------------------- */
+
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav ul {
+    width: 400px;
+    margin-top: 0;
+  }
+
+  /* Welcome Section */
+  .welcome {
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  .content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .upgrades,
+  .reviews {
+    width: 48%;
+  }
+
+
 }
