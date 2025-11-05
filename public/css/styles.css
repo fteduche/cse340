@@ -63,18 +63,33 @@ nav ul li a:hover {
 /* Welcome Section */
 .welcome {
   padding: 1.5rem;
-  text-align: center;
+  display: block;
+  /* Place the container relative to .welcome */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .delorean-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .delorean-info {
-  text-align: left;
-  margin-bottom: 1rem;
+  position: absolute;
+  /* Position relative to .delorean-container */
+  bottom: 3rem;
+  /* Spacing from the bottom edge */
+  left: 1.5rem;
+  /* Spacing from the left edge */
+  padding: 1rem;
+  z-index: 3;
+  /* Highest layer, ensures visibility over the overlay */
+  /* Remove flex properties from the previous iteration */
+  display: block;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .delorean-title {
@@ -97,7 +112,7 @@ nav ul li a:hover {
 }
 
 .delorean-img {
-  max-width: 350px;
+  max-width: 100%;
   height: auto;
 }
 
@@ -180,6 +195,11 @@ footer {
   .welcome {
     padding: 1.5rem;
     text-align: left;
+  }
+
+  .delorean-img {
+    width: 100%;
+    height: auto;
   }
 
   .content {
