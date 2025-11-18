@@ -1,9 +1,7 @@
-/* ****************************************** 
- * This server.js file is the primary file of the 
+/* ****************************************** * This server.js file is the primary file of the 
  * application. It is used to control the project. 
  *******************************************/
-/* *********************** 
- * Require Statements 
+/* *********************** * Require Statements 
  *************************/
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
@@ -14,44 +12,52 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute") // Define inventoryRoute
 const utilities = require("./utilities") // Define utilities
 
-/* *********************** 
- * view Engine and Template 
+/* *********************** * view Engine and Template 
  *************************/
 app.use(expressLayouts)
 app.set("view engine", "ejs")
 app.set("layout", "./layouts/layout")
 
-/* *********************** 
- * Routes 
+/* *********************** * Routes 
  *************************/
 app.use(require("./routes/static"));
-app.get("/", baseController.buildHome);
+// Route for home page (wrapped with error handler)
+app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute) // Use inventoryRoute
 
-/* *********************** 
- * Local Server Information 
+/* *********************** * Local Server Information 
  * Values from .env (environment) file 
  *************************/
 const port = process.env.PORT
 const host = process.env.HOST
 
-/* *********************** 
- * Express Error Handler 
- * Place after all other middleware 
- *************************/
+/* ***********************
+* Express Error Handler
+* Place after all other routes and middleware (Task 2)
+*************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.render("errors/error", { title: err.status || 'Server Error', message: err.message, nav })
+
+  // Set the error status and message
+  const status = err.status || 500
+  let message;
+
+  if (status === 404) {
+    message = err.message
+  } else {
+    message = 'Oh no! There was a crash. Maybe try a different route?'
+  }
+
+  // Set the correct status code and render the error view
+  res.status(status).render("errors/error", {
+    title: status + ' ' + (status === 404 ? 'Not Found' : 'Server Error'),
+    message,
+    nav
+  })
 })
 
-// app.use((err, req, res, next) => {
-//   console.error(err.stack)
-//   res.status(500).send("Something broke!")
-// })
-
-/* *********************** 
- * Log statement to confirm server operation 
+/* *********************** * Log statement to confirm server operation 
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)

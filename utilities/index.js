@@ -57,4 +57,57 @@ Util.buildClassificationGrid = async function (data) {
     return grid
 }
 
+/* **************************************
+* Build the detail view HTML (Task 1)
+* ************************************ */
+Util.buildInventoryDetail = function (vehicle) {
+    let grid = ''
+    if (vehicle) {
+        grid = '<div class="detail-container">'
+
+        // Image section (full size image)
+        grid += `<div class="detail-image">`
+        grid += `<img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} ${vehicle.inv_year}">`
+        grid += `</div>`
+
+        // Details section
+        grid += `<div class="detail-info">`
+
+        // Price formatting with currency symbol
+        let price = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(vehicle.inv_price)
+
+        grid += `<h3 class="price">No-Haggle Price: ${price}</h3>`
+
+        grid += `<p class="description"><strong>Description:</strong> ${vehicle.inv_description}</p>`
+
+        // Mileage formatting with commas
+        let mileage = vehicle.inv_miles.toLocaleString('en-US')
+        grid += `<p><strong>Mileage:</strong> ${mileage}</p>`
+
+        grid += `<ul class="specs-list">`
+        grid += `<li><strong>Year:</strong> ${vehicle.inv_year}</li>`
+        grid += `<li><strong>Make:</strong> ${vehicle.inv_make}</li>`
+        grid += `<li><strong>Model:</strong> ${vehicle.inv_model}</li>`
+        grid += `<li><strong>Color:</strong> ${vehicle.inv_color}</li>`
+        grid += `<li><strong>Classification:</strong> ${vehicle.classification_name || 'N/A'}</li>`
+        grid += `</ul>`
+
+        grid += `</div>` // Close detail-info
+        grid += `</div>` // Close detail-container
+    } else {
+        grid += '<p class="notice">Sorry, no details could be found for this vehicle.</p>'
+    }
+    return grid
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 module.exports = Util
